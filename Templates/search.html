@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block search_body %}
+<!-- <h1>Search me</h1> -->
+{% if user_ref|length < 1 %}
+<p>No Search results:</p>
+Your Search query: <b> {{ search_query }} </b> did not match any documents. <br>
+Suggestions: <br>
+<ul>
+    <li>Make sure that all words are spelled correctly.</li>
+    <li>Try different keywords.</li>
+    <li>Try more general keywords.</li>
+</ul>
+{% endif %}
+{% for user_data in user_ref %}
+<div class="container-fluid">
+    <div class="col-md-12">
+        <div class="col-sm-4" style="float: left;">
+            <div class="card-deck">
+                <div class="card text-white bg-primary mb-3" style="width: 20rem;">
+                    <div class="card-header">{{ user_data.name }}</div>
+                    <div class="card-body">
+                        <h5 class="card-title">Name: {{ user_data.name }}</h5>
+                        <h5 class="card-title">Phone Number: {{ user_data.contact }}</h5>
+                        <h5 class="card-title">URL: {{ user_data.url }}</h5>
+                        <a href="#" class="btn btn-light">Get images</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}

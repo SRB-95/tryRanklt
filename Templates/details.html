@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block details_body %}
+{% for data in user_details %}
+<div class="container-fluid">
+    <div class="col-md-12">
+        <div class="col-sm-4" style="float: left;">
+            <div class="card-deck">
+                <div class="card text-white bg-primary mb-3" style="width: 20rem;">
+                    <div class="card-header">{{ data.name }}</div>
+                    <div class="card-body">
+                        <h5 class="card-title">Name: {{ data.name }}</h5>
+                        <h5 class="card-title">Phone Number: {{ data.contact }}</h5>
+                        <h5 class="card-title">URL: {{ data.url }}</h5>
+                        <a href="http://127.0.0.1:8000/details/{{ data.id }}" id="{{ data.id }}" class="btn gi btn-light" onclick="getImage(this.id)">Get Images</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+<script type="text/javascript">
+    function getImage(id) {
+        var user_id = id.split("_")[0]
+        console.log(user_id)
+        $.ajax({
+            type: "POST",
+            url: "/details/"+ user_id,
+            data: {
+                "user_id": user_id
+            },
+            headers: {
+                "X-CSRFToken": "{{ csrf_token }}"
+            },
+            success: function(data){
+                console.log(data.user_id)
+            },
+            error: function(err){
+                console.log("I am Error")
+            }
+        })
+    }
+</script>
+{% endblock %}
